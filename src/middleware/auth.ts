@@ -5,8 +5,13 @@ export function authMiddleware(
   res: Response,
   next: NextFunction,
 ): void {
-  // TODO: Student implementation - Part 1: Authentication Middleware
-  // Store the authenticated userId on res.locals.userId
+  if (req.method === "POST" || req.method == "PATCH") {
+    if (!req.get("X-User-Id"))
+      res.status(401);
+    else
+      res.locals.userId = req.get("X-User-Id")
+  }
+
   next();
 }
 
