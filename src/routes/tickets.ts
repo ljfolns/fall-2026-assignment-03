@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import {
+  createTicket,
   getAllTickets,
   GetAllTicketsOptions,
   getTicketById,
 } from '../dal/tickets.js';
-import { getUserById } from '../dal/users.js';
+import { createUser, getUserById } from '../dal/users.js';
+import { NewTicket, NewUser, Ticket } from '../db/database.js';
 
 const router = Router();
 
@@ -23,6 +25,17 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   res.json(await getTicketById(parseInt(req.params.id)));
+});
+
+router.post('/', async (req, res): Promise<void> => {
+  const ticket: NewTicket = {
+    creator_id: parseInt(<string>req.get('X-User-Id')),
+    title: req.body.title,
+    description: req.body.description,
+  };
+  await createTicket(ticket);
+  res.status(201);
+  res.json({});
 });
 // GET /tickets/:id
 // POST /tickets
