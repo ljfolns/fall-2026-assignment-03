@@ -3,7 +3,7 @@ import {
   createTicket,
   getAllTickets,
   GetAllTicketsOptions,
-  getTicketById,
+  getTicketById, updateTicketStatus,
 } from '../dal/tickets.js';
 import { createUser, getUserById } from '../dal/users.js';
 import { NewTicket, NewUser, Ticket } from '../db/database.js';
@@ -32,6 +32,12 @@ router.post('/', async (req, res): Promise<void> => {
   ticket.creator_id = res.locals.userId;
   await createTicket(ticket);
   res.status(201);
+  res.json({});
+});
+
+router.patch("/:id/status", async (req, res) => {
+  await updateTicketStatus(parseInt(req.params.id), req.body.status);
+  res.status(200);
   res.json({});
 });
 
