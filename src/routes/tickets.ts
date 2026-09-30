@@ -28,17 +28,13 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post('/', async (req, res): Promise<void> => {
-  const ticket: NewTicket = {
-    creator_id: parseInt(<string>req.get('X-User-Id')),
-    title: req.body.title,
-    description: req.body.description,
-  };
+  const ticket: NewTicket = req.body;
+  ticket.creator_id = res.locals.userId;
   await createTicket(ticket);
   res.status(201);
   res.json({});
 });
-// GET /tickets/:id
-// POST /tickets
+
 // PATCH /tickets/:id/status
 
 // TODO: Student implementation - Part 2: Time Log Routes
