@@ -12,4 +12,30 @@ describe('Part 1: API Integration Tests', () => {
     // Test pagination and filtering on GET /tickets
     expect(true).toBe(true);
   });
+
+  it('should make users correctly', async () => {
+    const res = await fetch('http://localhost:3000/users', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-User-Id': '1'
+      },
+      body: JSON.stringify({ name: 'John Doe', email: 'john@doe.com' }),
+    });
+    expect(res.status).toBe(201);
+  });
+
+  it('should make tickets correctly', async () => {
+    const res = await fetch('http://localhost:3000/tickets', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        "X-User-Id": '1'
+      },
+      body: JSON.stringify({ title: 'I am dying', description: 'Help' }),
+    });
+    expect(res.status).toBe(201);
+  });
 });

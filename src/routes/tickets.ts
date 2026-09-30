@@ -41,8 +41,6 @@ router.patch("/:id/status", async (req, res) => {
   res.json({});
 });
 
-// PATCH /tickets/:id/status
-
 // TODO: Student implementation - Part 2: Time Log Routes
 // POST /tickets/:id/time
 // GET /tickets/:id/time
