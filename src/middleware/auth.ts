@@ -6,9 +6,11 @@ export function authMiddleware(
   next: NextFunction,
 ): void {
   if (req.method === "POST" || req.method == "PATCH") {
-    if (!req.get("X-User-Id"))
+    if (!req.get("X-User-Id")) {
       res.status(401);
-    else
+      res.json();
+      return;
+    } else
       res.locals.userId = req.get("X-User-Id")
   }
 

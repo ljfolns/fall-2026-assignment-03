@@ -9,12 +9,19 @@ import authMiddleware from './middleware/auth.js';
 export const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
-
 app.use((req, res, next) => {
-  authMiddleware(req, res, next);
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-User-Id');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
   next();
 });
+
+app.use(express.json());
+
+app.use(authMiddleware)
 
 app.use('/users', usersRouter);
 app.use('/tickets', ticketsRouter);
